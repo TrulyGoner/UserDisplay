@@ -1,0 +1,139 @@
+.ud-dialog {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7);
+  max-width: 480px;
+  width: 90vw;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.ud-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(3px);
+}
+
+.ud-content {
+  padding: 28px 32px 24px;
+  position: relative;
+}
+
+.ud-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--border);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.ud-close:hover {
+  background: rgba(195, 7, 63, 0.12);
+  color: var(--accent);
+}
+
+.ud-title {
+  margin: 0 0 20px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-h);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--accent-dim);
+  padding-bottom: 12px;
+}
+
+.ud-fields {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 24px;
+}
+
+.ud-field {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  align-items: start;
+  gap: 8px;
+}
+
+.ud-label {
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-top: 3px;
+  display: block;
+}
+
+.ud-value {
+  color: var(--text-h);
+  font-size: 0.9rem;
+  word-break: break-word;
+  display: block;
+}
+
+.ud-address-input {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text-h);
+  background: var(--bg);
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.ud-address-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(195, 7, 63, 0.25);
+}
+
+.ud-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.ud-btn {
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.ud-btn--secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.ud-btn--secondary:hover {
+  background: rgba(78, 78, 80, 0.3);
+  border-color: var(--accent-dim);
+}
+
+.ud-btn--primary {
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: #fff;
+}
+
+.ud-btn--primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}

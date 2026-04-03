@@ -1,0 +1,30 @@
+.add-user-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 22px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.add-user-btn__icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+.add-user-btn:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.add-user-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

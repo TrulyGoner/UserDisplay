@@ -1,0 +1,28 @@
+.users-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 36px 24px;
+}
+
+.users-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.users-page__title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-h);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.users-page__main {
+  background: var(--surface);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}

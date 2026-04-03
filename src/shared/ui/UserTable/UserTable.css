@@ -1,0 +1,81 @@
+.ut-empty {
+  text-align: center;
+  color: var(--border);
+  margin-top: 48px;
+  font-size: 1rem;
+}
+
+.ut-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.ut-table th {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 2px solid var(--accent-dim);
+  color: var(--accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  background: var(--bg);
+}
+
+.ut-row {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.ut-row:hover {
+  background: rgba(195, 7, 63, 0.08);
+}
+
+.ut-row td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border);
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+.ut-th-actions {
+  width: 80px;
+}
+
+.ut-details {
+  background: none;
+  border: none;
+  color: var(--border);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: background 0.15s, color 0.15s;
+}
+
+.ut-details:hover {
+  background: rgba(195, 7, 63, 0.15);
+  color: var(--accent);
+}
+
+.ut-delete {
+  background: none;
+  border: none;
+  color: var(--accent-dim);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.ut-delete:hover {
+  background: rgba(195, 7, 63, 0.15);
+  color: var(--accent);
+}
