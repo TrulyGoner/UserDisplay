@@ -23,8 +23,6 @@
 src/
 ├── app/          # Корневой компонент, провайдеры, глобальные стили
 ├── pages/        # UsersPage
-├── features/     # add-user, edit-user (реэкспорт из shared/ui)
-├── widgets/      # user-table (реэкспорт из shared/ui)
 ├── entities/     # Тип User, Redux slice, селекторы, API
 └── shared/
     ├── config/   # Переменные окружения (VITE_API_NINJAS_KEY)
