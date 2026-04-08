@@ -1,11 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { usersReducer } from '../../entities/user';
-
-export const store = configureStore({
-  reducer: {
-    users: usersReducer,
-  },
-});
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export { createStore } from './createStore';
+export type { Store, Action, Reducer } from './createStore';
+export { useStore } from './useStore';
+export { usersStore } from './usersStore';

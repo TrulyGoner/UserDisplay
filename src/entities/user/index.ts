@@ -1,4 +1,4 @@
 export type { User } from './model/types';
-export { addUser, deleteUser, updateUser, default as usersReducer } from './model/slice';
-export { selectUsers } from './model/selectors';
+export type { UsersState, UsersAction } from './model/usersReducer';
+export { usersReducer, usersInitialState } from './model/usersReducer';
 export { fetchRandomUser } from './api/randomUserApi';
