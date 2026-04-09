@@ -1,17 +1,16 @@
 import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../shared/store/hooks';
-import { deleteUser, updateUser, selectUsers } from '../../../entities/user';
+import { useStore } from '../../../shared/store/useStore';
+import { usersStore } from '../../../shared/store/usersStore';
 import type { User } from '../../../entities/user';
 import { AddUserButton, UserDialog, UserTable } from '../../../shared/ui';
 import './UsersPage.css';
 
 export function UsersPage() {
-  const dispatch = useAppDispatch();
-  const users = useAppSelector(selectUsers);
+  const users = useStore(usersStore, (s) => s.list);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   function handleSave(updated: User) {
-    dispatch(updateUser(updated));
+    usersStore.dispatch({ type: 'UPDATE_USER', payload: updated });
     setSelectedUser(null);
   }
 
@@ -26,7 +25,7 @@ export function UsersPage() {
         <UserTable
           users={users}
           onRowClick={setSelectedUser}
-          onDelete={(id: string) => dispatch(deleteUser(id))}
+          onDelete={(id: string) => usersStore.dispatch({ type: 'DELETE_USER', payload: id })}
         />
       </main>
 

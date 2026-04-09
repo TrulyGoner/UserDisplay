@@ -1,12 +1,8 @@
-import { StoreProvider } from './providers/StoreProvider';
 import { UsersPage } from '../pages/users';
+import './styles/index.css';
 
 function App() {
-  return (
-    <StoreProvider>
-      <UsersPage />
-    </StoreProvider>
-  );
+  return <UsersPage />;
 }
 
 export default App;
