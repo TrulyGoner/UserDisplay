@@ -1,10 +1,10 @@
 # Управление пользователями
 
-Приложение на React + Redux Toolkit для управления списком пользователей.
+Приложение на React + TypeScript для управления списком пользователей.
 
 ## Возможности
 
-- Просмотр таблицы пользователей (логин, имя, email, адрес)
+- Просмотр таблицы пользователей (логин, имя, пол, дата рождения, email, адрес)
 - Добавление случайного пользователя через [API Ninjas](https://api-ninjas.com/api/randomuser) или встроенный список запасных данных
 - Удаление любого пользователя
 - Клик по строке открывает диалог с подробностями — все поля отображаются, адрес можно редактировать
@@ -13,7 +13,7 @@
 ## Технологии
 
 - **React 19** + **TypeScript**
-- **Redux Toolkit** — глобальное состояние
+- **Кастомный стор** — реализация `createStore` / `useStore` без сторонних библиотек управления состоянием
 - **Vite** — инструмент сборки
 - **FSD** (Feature-Sliced Design) — архитектура проекта
 
@@ -23,10 +23,11 @@
 src/
 ├── app/          # Корневой компонент, провайдеры, глобальные стили
 ├── pages/        # UsersPage
-├── entities/     # Тип User, Redux slice, селекторы, API
+├── entities/
+│   └── user/     # Тип User, reducer, actions, API
 └── shared/
     ├── config/   # Переменные окружения (VITE_API_NINJAS_KEY)
-    ├── store/    # configureStore, типизированные хуки
+    ├── store/    # createStore, usersStore, useStore
     └── ui/       # AddUserButton, UserTable, UserDialog
 ```
 
@@ -37,9 +38,16 @@ npm install
 npm run dev
 ```
 
+## Сборка
+
+```bash
+npm run build
+npm run preview
+```
+
 ## API-ключ
 
-Для получения реальных случайных пользователей добавьте ключ [API Ninjas](https://api-ninjas.com) в файл `.
+Для получения реальных случайных пользователей добавьте ключ [API Ninjas](https://api-ninjas.com) в файл `.env`:
 
 ```
 VITE_API_NINJAS_KEY=ваш_ключ_здесь
