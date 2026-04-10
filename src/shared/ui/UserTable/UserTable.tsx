@@ -4,11 +4,25 @@ import './UserTable.css';
 
 const ROW_HEIGHT = 46;
 const MAX_HEIGHT = 500;
+const SKELETON_COUNT = 3;
 
 interface Props {
   users: User[];
+  loading?: boolean;
   onRowClick: (user: User) => void;
   onDelete: (id: string) => void;
+}
+
+function SkeletonRow() {
+  return (
+    <div className="ut-row ut-row--skeleton" style={{ height: ROW_HEIGHT }}>
+      <div className="ut-cell"><span className="ut-skeleton" style={{ width: '60%' }} /></div>
+      <div className="ut-cell"><span className="ut-skeleton" style={{ width: '70%' }} /></div>
+      <div className="ut-cell"><span className="ut-skeleton" style={{ width: '75%' }} /></div>
+      <div className="ut-cell"><span className="ut-skeleton" style={{ width: '50%' }} /></div>
+      <div className="ut-cell ut-cell--actions" />
+    </div>
+  );
 }
 
 interface RowData {
@@ -57,12 +71,13 @@ function Row({ index, style, users, onRowClick, onDelete }: RowComponentProps<Ro
   );
 }
 
-export function UserTable({ users, onRowClick, onDelete }: Props) {
-  if (users.length === 0) {
+export function UserTable({ users, loading, onRowClick, onDelete }: Props) {
+  if (users.length === 0 && !loading) {
     return <p className="ut-empty">No users yet. Click «Add User» to add one.</p>;
   }
 
   const listHeight = Math.min(users.length * ROW_HEIGHT, MAX_HEIGHT);
+  const skeletonCount = users.length === 0 ? SKELETON_COUNT : 1;
 
   return (
     <div className="ut-container">
@@ -73,16 +88,19 @@ export function UserTable({ users, onRowClick, onDelete }: Props) {
         <div className="ut-th">Address</div>
         <div className="ut-th" aria-label="Actions" />
       </div>
-      <div style={{ height: listHeight }}>
-        <List
-          rowComponent={Row}
-          rowCount={users.length}
-          rowHeight={ROW_HEIGHT}
-          rowProps={{ users, onRowClick, onDelete }}
-          defaultHeight={listHeight}
-          style={{ overflow: listHeight < MAX_HEIGHT ? 'hidden' : 'auto' }}
-        />
-      </div>
+      {users.length > 0 && (
+        <div style={{ height: listHeight }}>
+          <List
+            rowComponent={Row}
+            rowCount={users.length}
+            rowHeight={ROW_HEIGHT}
+            rowProps={{ users, onRowClick, onDelete }}
+            defaultHeight={listHeight}
+            style={{ overflow: listHeight < MAX_HEIGHT ? 'hidden' : 'auto' }}
+          />
+        </div>
+      )}
+      {loading && Array.from({ length: skeletonCount }, (_, i) => <SkeletonRow key={i} />)}
     </div>
   );
 }

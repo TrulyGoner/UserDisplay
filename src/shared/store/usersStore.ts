@@ -1,4 +1,33 @@
 import { createStore } from './createStore';
 import { usersReducer, usersInitialState } from '../../entities/user/model/usersReducer';
+import type { User } from '../../entities/user';
 
-export const usersStore = createStore(usersReducer, usersInitialState);
+const STORAGE_KEY = 'app_users';
+
+function loadFromStorage(): User[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as User[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveToStorage(users: User[]): void {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+  } catch {
+  }
+}
+
+const persisted = loadFromStorage();
+
+export const usersStore = createStore(
+  usersReducer,
+  persisted.length > 0 ? { ...usersInitialState, list: persisted } : usersInitialState,
+);
+
+usersStore.subscribe(() => {
+  saveToStorage(usersStore.getState().list);
+});
+
