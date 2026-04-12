@@ -1,0 +1,24 @@
+.ut-row--skeleton .ut-cell:nth-child(1) .ut-skeleton { --ut-w: 60%; }
+.ut-row--skeleton .ut-cell:nth-child(2) .ut-skeleton { --ut-w: 70%; }
+.ut-row--skeleton .ut-cell:nth-child(3) .ut-skeleton { --ut-w: 75%; }
+.ut-row--skeleton .ut-cell:nth-child(4) .ut-skeleton { --ut-w: 50%; }
+
+.ut-skeleton {
+  width: var(--ut-w, 100%);
+  display: block;
+  height: 13px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--border) 25%,
+    rgba(78, 78, 80, 0.35) 50%,
+    var(--border) 75%
+  );
+  background-size: 200% 100%;
+  animation: ut-shimmer 1.5s infinite;
+}
+
+@keyframes ut-shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}

@@ -1,38 +1,14 @@
 import { List, type RowComponentProps } from 'react-window';
-import type { User } from '../../../entities/user';
 import { ICON_SIZE, MAX_HEIGHT, ROW_HEIGHT, SKELETON_COUNT, SKELETON_KEYS } from '../../constants';
+import type { UserTableProps, UserRowData } from '../../types';
+import { SkeletonRow } from '../Skeleton';
 import './UserTable.css';
 
-interface Props {
-  users: User[];
-  loading?: boolean;
-  onRowClick: (user: User) => void;
-  onDelete: (id: string) => void;
-}
 
-function SkeletonRow() {
-  return (
-    <div className="ut-row ut-row--skeleton">
-      <div className="ut-cell"><span className="ut-skeleton" /></div>
-      <div className="ut-cell"><span className="ut-skeleton" /></div>
-      <div className="ut-cell"><span className="ut-skeleton" /></div>
-      <div className="ut-cell"><span className="ut-skeleton" /></div>
-      <div className="ut-cell ut-cell--actions" />
-    </div>
-  );
-}
-
-interface RowData {
-  users: User[];
-  onRowClick: (user: User) => void;
-  onDelete: (id: string) => void;
-}
-
-function Row({ index, style, users, onRowClick, onDelete }: RowComponentProps<RowData>) {
+function Row({ index, style, users, onRowClick, onDelete }: RowComponentProps<UserRowData>) {
   const user = users[index];
 
-  const handleDelete = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleDelete = () => {
     onDelete(user.id);
   };
 
@@ -72,7 +48,7 @@ function Row({ index, style, users, onRowClick, onDelete }: RowComponentProps<Ro
   );
 }
 
-export function UserTable({ users, loading, onRowClick, onDelete }: Props) {
+export function UserTable({ users, loading, onRowClick, onDelete }: UserTableProps) {
   if (users.length === 0 && !loading) {
     return <p className="ut-empty">No users yet. Click «Add User» to add one.</p>;
   }
@@ -92,7 +68,7 @@ export function UserTable({ users, loading, onRowClick, onDelete }: Props) {
         <div className="ut-th">Address</div>
         <div className="ut-th" aria-label="Actions" />
       </div>
-      {!!users.length && (
+      {users.length > 0 && (
         <div style={listContainerStyle}>
           <List
             rowComponent={Row}

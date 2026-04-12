@@ -10,9 +10,14 @@ interface ToastState {
   items: ToastItem[];
 }
 
+const ToastActionTypes = {
+  ADD: 'ADD_TOAST',
+  REMOVE: 'REMOVE_TOAST',
+} as const;
+
 type ToastAction =
-  | { type: 'ADD_TOAST'; payload: ToastItem }
-  | { type: 'REMOVE_TOAST'; payload: string };
+  | { type: typeof ToastActionTypes.ADD; payload: ToastItem }
+  | { type: typeof ToastActionTypes.REMOVE; payload: string };
 
 const toastTimers = new Map<string, ReturnType<typeof setTimeout>>();
 
@@ -26,9 +31,9 @@ function removeToastItem(state: ToastState, id: string): ToastState {
 
 function toastReducer(state: ToastState, action: ToastAction): ToastState {
   switch (action.type) {
-    case 'ADD_TOAST':
+    case ToastActionTypes.ADD:
       return addToastItem(state, action.payload);
-    case 'REMOVE_TOAST':
+    case ToastActionTypes.REMOVE:
       return removeToastItem(state, action.payload);
     default:
       return state;
@@ -39,7 +44,7 @@ export const toastStore = createStore(toastReducer, { items: [] });
 
 export function addToast(message: string, onUndo?: () => void): string {
   const id = crypto.randomUUID();
-  toastStore.dispatch({ type: 'ADD_TOAST', payload: { id, message, onUndo } });
+  toastStore.dispatch({ type: ToastActionTypes.ADD, payload: { id, message, onUndo } });
   const timer = setTimeout(() => {
     dismissToast(id);
   }, 5000);
@@ -53,12 +58,12 @@ export function dismissToast(id: string): void {
     clearTimeout(timer);
     toastTimers.delete(id);
   }
-  toastStore.dispatch({ type: 'REMOVE_TOAST', payload: id });
+  toastStore.dispatch({ type: ToastActionTypes.REMOVE, payload: id });
 }
 
 export function clearAllToasts(): void {
   toastTimers.forEach((timer) => clearTimeout(timer));
   toastTimers.clear();
   const { items } = toastStore.getState();
-  items.forEach((t) => toastStore.dispatch({ type: 'REMOVE_TOAST', payload: t.id }));
+  items.forEach((t) => toastStore.dispatch({ type: ToastActionTypes.REMOVE, payload: t.id }));
 }

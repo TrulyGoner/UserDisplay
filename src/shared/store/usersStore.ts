@@ -1,8 +1,8 @@
 import { createStore } from './createStore';
+import { addToast } from './toastStore';
 import { usersReducer, usersInitialState } from '../../entities/user/model/usersReducer';
 import type { User } from '../../entities/user';
-
-const STORAGE_KEY = 'app_users';
+import { STORAGE_KEY } from '../constants';
 
 function loadFromStorage(): User[] {
   try {
@@ -17,6 +17,7 @@ function saveToStorage(users: User[]): void {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
   } catch {
+    addToast('Failed to save users to storage');
   }
 }
 
