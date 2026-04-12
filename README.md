@@ -24,15 +24,22 @@
 
 ```
 src/
-├── app/          # Корневой компонент, провайдеры, глобальные стили
+├── app/          # Корневой компонент, глобальные стили
 ├── pages/
 │   └── users/    # UsersPage
 ├── entities/
 │   └── user/     # Тип User, reducer, actions, API
 └── shared/
     ├── config/   # Переменные окружения (VITE_API_NINJAS_KEY)
+    ├── constants/ # Общие константы (ROW_HEIGHT, STORAGE_KEY и др.)
+    ├── types/    # Общие интерфейсы (UserTableProps, UserRowData)
     ├── store/    # createStore, usersStore, toastStore, useStore
-    └── ui/       # AddUserButton, UserTable, UserDialog, Toast
+    └── ui/
+        ├── AddUserButton/
+        ├── Skeleton/     # SkeletonRow — анимированные заглушки строк
+        ├── Toast/        # Toast-уведомления
+        ├── UserDialog/   # Диалог просмотра/редактирования пользователя
+        └── UserTable/    # Виртуализированная таблица
 ```
 
 ## Запуск
