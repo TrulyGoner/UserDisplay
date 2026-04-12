@@ -3,13 +3,16 @@ import { useStore } from '../../../shared/store/useStore';
 import { usersStore } from '../../../shared/store/usersStore';
 import { addToast } from '../../../shared/store/toastStore';
 import type { User } from '../../../entities/user';
-import { AddUserButton, UserDialog, UserTable } from '../../../shared/ui';
+import { AddUserButton, ConfirmDialog, UserDialog, UserTable } from '../../../shared/ui';
 import './UsersPage.css';
 
 export function UsersPage() {
   const users = useStore(usersStore, (s) => s.list);
   const loading = useStore(usersStore, (s) => s.loading);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
+
+  const pendingDeleteUser = pendingDeleteId ? (users.find((u) => u.id === pendingDeleteId) ?? null) : null;
 
   function handleSave(updated: User) {
     usersStore.dispatch({ type: 'UPDATE_USER', payload: updated });
@@ -17,13 +20,22 @@ export function UsersPage() {
     setSelectedUser(null);
   }
 
-  function handleDelete(id: string) {
-    const user = users.find((u) => u.id === id);
-    if (!user) return;
-    usersStore.dispatch({ type: 'DELETE_USER', payload: id });
+  function handleDeleteRequest(id: string) {
+    setPendingDeleteId(id);
+  }
+
+  function handleDeleteConfirm() {
+    if (!pendingDeleteUser) return;
+    const user = pendingDeleteUser;
+    usersStore.dispatch({ type: 'DELETE_USER', payload: user.id });
     addToast(`Deleted "${user.username}"`, () => {
       usersStore.dispatch({ type: 'ADD_USER', payload: user });
     });
+    setPendingDeleteId(null);
+  }
+
+  function handleReorder(from: number, to: number) {
+    usersStore.dispatch({ type: 'REORDER_USERS', payload: { from, to } });
   }
 
   const handleDialogClose = () => setSelectedUser(null);
@@ -40,7 +52,8 @@ export function UsersPage() {
           users={users}
           loading={loading}
           onRowClick={setSelectedUser}
-          onDelete={handleDelete}
+          onDelete={handleDeleteRequest}
+          onReorder={handleReorder}
         />
       </main>
 
@@ -49,6 +62,14 @@ export function UsersPage() {
           user={selectedUser}
           onSave={handleSave}
           onClose={handleDialogClose}
+        />
+      )}
+
+      {pendingDeleteUser && (
+        <ConfirmDialog
+          message={`Delete "${pendingDeleteUser.username}"?`}
+          onConfirm={handleDeleteConfirm}
+          onClose={() => setPendingDeleteId(null)}
         />
       )}
     </div>
