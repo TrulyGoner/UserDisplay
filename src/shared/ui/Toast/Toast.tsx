@@ -9,31 +9,35 @@ export function Toast() {
 
   return (
     <div className="toast-container" role="region" aria-live="polite" aria-label="Notifications">
-      {items.map((toast) => (
-        <div key={toast.id} className="toast">
-          <span className="toast__message">{toast.message}</span>
-          <div className="toast__actions">
-            {toast.onUndo && (
+      {items.map((toast) => {
+        const handleUndo = () => {
+          toast.onUndo?.();
+          dismissToast(toast.id);
+        };
+
+        return (
+          <div key={toast.id} className="toast">
+            <span className="toast__message">{toast.message}</span>
+            <div className="toast__actions">
+              {toast.onUndo && (
+                <button
+                  className="toast__undo"
+                  onClick={handleUndo}
+                >
+                  Undo
+                </button>
+              )}
               <button
-                className="toast__undo"
-                onClick={() => {
-                  toast.onUndo!();
-                  dismissToast(toast.id);
-                }}
+                className="toast__close"
+                aria-label="Dismiss notification"
+                onClick={() => dismissToast(toast.id)}
               >
-                Undo
+                ✕
               </button>
-            )}
-            <button
-              className="toast__close"
-              aria-label="Dismiss notification"
-              onClick={() => dismissToast(toast.id)}
-            >
-              ✕
-            </button>
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

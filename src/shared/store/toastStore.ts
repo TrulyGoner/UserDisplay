@@ -16,12 +16,20 @@ type ToastAction =
 
 const toastTimers = new Map<string, ReturnType<typeof setTimeout>>();
 
+function addToastItem(state: ToastState, payload: ToastItem): ToastState {
+  return { items: [...state.items, payload] };
+}
+
+function removeToastItem(state: ToastState, id: string): ToastState {
+  return { items: state.items.filter((t) => t.id !== id) };
+}
+
 function toastReducer(state: ToastState, action: ToastAction): ToastState {
   switch (action.type) {
     case 'ADD_TOAST':
-      return { items: [...state.items, action.payload] };
+      return addToastItem(state, action.payload);
     case 'REMOVE_TOAST':
-      return { items: state.items.filter((t) => t.id !== action.payload) };
+      return removeToastItem(state, action.payload);
     default:
       return state;
   }
@@ -46,4 +54,11 @@ export function dismissToast(id: string): void {
     toastTimers.delete(id);
   }
   toastStore.dispatch({ type: 'REMOVE_TOAST', payload: id });
+}
+
+export function clearAllToasts(): void {
+  toastTimers.forEach((timer) => clearTimeout(timer));
+  toastTimers.clear();
+  const { items } = toastStore.getState();
+  items.forEach((t) => toastStore.dispatch({ type: 'REMOVE_TOAST', payload: t.id }));
 }

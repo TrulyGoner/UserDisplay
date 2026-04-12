@@ -94,9 +94,16 @@
   cursor: default;
   pointer-events: none;
   border-bottom: 1px solid var(--border);
+  height: 46px;
 }
 
+.ut-row--skeleton .ut-cell:nth-child(1) .ut-skeleton { --ut-w: 60%; }
+.ut-row--skeleton .ut-cell:nth-child(2) .ut-skeleton { --ut-w: 70%; }
+.ut-row--skeleton .ut-cell:nth-child(3) .ut-skeleton { --ut-w: 75%; }
+.ut-row--skeleton .ut-cell:nth-child(4) .ut-skeleton { --ut-w: 50%; }
+
 .ut-skeleton {
+  width: var(--ut-w, 100%);
   display: block;
   height: 13px;
   border-radius: 4px;

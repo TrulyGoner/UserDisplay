@@ -25,6 +25,10 @@ export function UserDialog({ user, onSave, onClose }: Props) {
     onSave({ ...user, address });
   }
 
+  function handleAddressChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    setAddress(e.target.value);
+  }
+
   function handleBackdropClick(e: React.MouseEvent<HTMLDialogElement>) {
     if (e.target === dialogRef.current) {
       onClose();
@@ -66,7 +70,7 @@ export function UserDialog({ user, onSave, onClose }: Props) {
               id="ud-address"
               className="ud-address-input"
               value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              onChange={handleAddressChange}
               rows={2}
             />
           </div>

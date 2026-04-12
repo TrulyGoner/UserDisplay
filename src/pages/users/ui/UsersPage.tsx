@@ -26,6 +26,8 @@ export function UsersPage() {
     });
   }
 
+  const handleDialogClose = () => setSelectedUser(null);
+
   return (
     <div className="users-page">
       <header className="users-page__header">
@@ -46,7 +48,7 @@ export function UsersPage() {
         <UserDialog
           user={selectedUser}
           onSave={handleSave}
-          onClose={() => setSelectedUser(null)}
+          onClose={handleDialogClose}
         />
       )}
     </div>
