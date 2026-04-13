@@ -3,19 +3,20 @@ import { useStore } from '../../../shared/store/useStore';
 import { usersStore } from '../../../shared/store/usersStore';
 import { addToast } from '../../../shared/store/toastStore';
 import type { User } from '../../../entities/user';
+import { UsersActionType } from '../../../entities/user';
 import { AddUserButton, ConfirmDialog, UserDialog, UserTable } from '../../../shared/ui';
 import './UsersPage.css';
 
 export function UsersPage() {
   const users = useStore(usersStore, (s) => s.list);
   const loading = useStore(usersStore, (s) => s.loading);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
+  const [selectedUser, setSelectedUser] = useState<Nullable<User>>(null);
+  const [pendingDeleteId, setPendingDeleteId] = useState<Nullable<string>>(null);
 
   const pendingDeleteUser = pendingDeleteId ? (users.find((u) => u.id === pendingDeleteId) ?? null) : null;
 
   function handleSave(updated: User) {
-    usersStore.dispatch({ type: 'UPDATE_USER', payload: updated });
+    usersStore.dispatch({ type: UsersActionType.UPDATE_USER, payload: updated });
     addToast(`Updated "${updated.username}"`);
     setSelectedUser(null);
   }
@@ -27,15 +28,15 @@ export function UsersPage() {
   function handleDeleteConfirm() {
     if (!pendingDeleteUser) return;
     const user = pendingDeleteUser;
-    usersStore.dispatch({ type: 'DELETE_USER', payload: user.id });
+    usersStore.dispatch({ type: UsersActionType.DELETE_USER, payload: user.id });
     addToast(`Deleted "${user.username}"`, () => {
-      usersStore.dispatch({ type: 'ADD_USER', payload: user });
+      usersStore.dispatch({ type: UsersActionType.ADD_USER, payload: user });
     });
     setPendingDeleteId(null);
   }
 
   function handleReorder(from: number, to: number) {
-    usersStore.dispatch({ type: 'REORDER_USERS', payload: { from, to } });
+    usersStore.dispatch({ type: UsersActionType.REORDER_USERS, payload: { from, to } });
   }
 
   const handleDialogClose = () => setSelectedUser(null);
