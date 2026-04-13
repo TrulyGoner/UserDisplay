@@ -47,7 +47,7 @@
 }
 
 .ut-row:hover {
-  background: rgba(195, 7, 63, 0.08);
+  background: var(--accent-alpha-08);
 }
 
 .ut-cell {
@@ -79,7 +79,7 @@
 }
 
 .ut-details:hover {
-  background: rgba(195, 7, 63, 0.15);
+  background: var(--accent-alpha-15);
   color: var(--accent);
 }
 
@@ -95,7 +95,7 @@
 }
 
 .ut-delete:hover {
-  background: rgba(195, 7, 63, 0.15);
+  background: var(--accent-alpha-15);
   color: var(--accent);
 }
 

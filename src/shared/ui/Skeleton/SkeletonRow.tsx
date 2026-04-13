@@ -1,11 +1,13 @@
-import { SKELETON_CELLS } from '../../constants';
+import { SKELETON_WIDTHS } from '../../constants';
 import './Skeleton.css';
 
 export function SkeletonRow() {
   return (
     <div className="ut-row ut-row--skeleton">
-      {Array.from({ length: SKELETON_CELLS }, (_, i) => (
-        <div key={i} className="ut-cell"><span className="ut-skeleton" /></div>
+      {SKELETON_WIDTHS.map((w, i) => (
+        <div key={i} className="ut-cell">
+          <span className="ut-skeleton" style={{ width: w }} />
+        </div>
       ))}
       <div className="ut-cell ut-cell--actions" />
     </div>

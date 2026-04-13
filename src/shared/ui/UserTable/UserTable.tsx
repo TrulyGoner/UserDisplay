@@ -58,8 +58,8 @@ function RowComponent({ index, style, users, onRowClick, onDelete, dragIndex, ov
 const Row = memo(RowComponent) as typeof RowComponent;
 
 export function UserTable({ users, loading, onRowClick, onDelete, onReorder }: UserTableProps) {
-  const [dragIndex, setDragIndex] = useState<number | null>(null);
-  const [overIndex, setOverIndex] = useState<number | null>(null);
+  const [dragIndex, setDragIndex] = useState<Nullable<number>>(null);
+  const [overIndex, setOverIndex] = useState<Nullable<number>>(null);
 
   function handleDragStart(index: number) { setDragIndex(index); }
   function handleDragOver(index: number) { setOverIndex(index); }

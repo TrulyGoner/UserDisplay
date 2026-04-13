@@ -13,14 +13,14 @@ export interface UsersState {
   loading: boolean;
 }
 
-type AT = typeof UsersActionType;
+type ActionType = typeof UsersActionType;
 
 export type UsersAction =
-  | { type: AT['ADD_USER']; payload: User }
-  | { type: AT['DELETE_USER']; payload: string }
-  | { type: AT['UPDATE_USER']; payload: User }
-  | { type: AT['REORDER_USERS']; payload: { from: number; to: number } }
-  | { type: AT['SET_LOADING']; payload: boolean };
+  | { type: ActionType['ADD_USER']; payload: User }
+  | { type: ActionType['DELETE_USER']; payload: string }
+  | { type: ActionType['UPDATE_USER']; payload: User }
+  | { type: ActionType['REORDER_USERS']; payload: { from: number; to: number } }
+  | { type: ActionType['SET_LOADING']; payload: boolean };
 
 export const usersInitialState: UsersState = {
   list: [],

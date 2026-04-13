@@ -70,7 +70,7 @@ export function UsersPage() {
         <ConfirmDialog
           message={`Delete "${pendingDeleteUser.username}"?`}
           onConfirm={handleDeleteConfirm}
-          onClose={() => setPendingDeleteId(null)}
+          onClose={() => setPendingDeleteId}
         />
       )}
     </div>

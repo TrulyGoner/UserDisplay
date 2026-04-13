@@ -12,8 +12,8 @@ export interface UserRowData {
   users: User[];
   onRowClick: (user: User) => void;
   onDelete: (id: string) => void;
-  dragIndex: number | null;
-  overIndex: number | null;
+  dragIndex: Nullable<number>;
+  overIndex: Nullable<number>;
   onDragStart: (index: number) => void;
   onDragOver: (index: number) => void;
   onDrop: (index: number) => void;

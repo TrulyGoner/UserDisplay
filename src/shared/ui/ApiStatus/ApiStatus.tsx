@@ -16,14 +16,24 @@ async function checkApi(): Promise<boolean> {
   }
 }
 
+const STATUS_LABELS: Record<Status, string> = {
+  checking: 'Checking…',
+  online:   'API online',
+  offline:  'API offline',
+};
+
 export function ApiStatus() {
   const [status, setStatus] = useState<Status>('checking');
 
   useEffect(() => {
-    checkApi().then((ok) => setStatus(ok ? 'online' : 'offline'));
+    async function updateStatus() {
+      const ok = await checkApi();
+      setStatus(ok ? 'online' : 'offline');
+    }
+    updateStatus();
   }, []);
 
-  const label = status === 'checking' ? 'Checking…' : status === 'online' ? 'API online' : 'API offline';
+  const label = STATUS_LABELS[status];
 
   return (
     <div className={`api-status api-status--${status}`} title={label}>
