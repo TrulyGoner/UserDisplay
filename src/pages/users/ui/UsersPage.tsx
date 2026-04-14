@@ -21,10 +21,6 @@ export function UsersPage() {
     setSelectedUser(null);
   }
 
-  function handleDeleteRequest(id: string) {
-    setPendingDeleteId(id);
-  }
-
   function handleDeleteConfirm() {
     if (!pendingDeleteUser) return;
     const user = pendingDeleteUser;
@@ -39,8 +35,6 @@ export function UsersPage() {
     usersStore.dispatch({ type: UsersActionType.REORDER_USERS, payload: { from, to } });
   }
 
-  const handleDialogClose = () => setSelectedUser(null);
-
   return (
     <div className="users-page">
       <header className="users-page__header">
@@ -53,7 +47,7 @@ export function UsersPage() {
           users={users}
           loading={loading}
           onRowClick={setSelectedUser}
-          onDelete={handleDeleteRequest}
+          onDelete={setPendingDeleteId}
           onReorder={handleReorder}
         />
       </main>
@@ -62,7 +56,7 @@ export function UsersPage() {
         <UserDialog
           user={selectedUser}
           onSave={handleSave}
-          onClose={handleDialogClose}
+          onClose={() => setSelectedUser(null)}
         />
       )}
 
@@ -70,7 +64,7 @@ export function UsersPage() {
         <ConfirmDialog
           message={`Delete "${pendingDeleteUser.username}"?`}
           onConfirm={handleDeleteConfirm}
-          onClose={() => setPendingDeleteId}
+          onClose={() => setPendingDeleteId(null)}
         />
       )}
     </div>
