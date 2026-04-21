@@ -1,15 +1,26 @@
 import type { User } from './types';
 
+export const UsersActionType = {
+  ADD_USER: 'ADD_USER',
+  DELETE_USER: 'DELETE_USER',
+  UPDATE_USER: 'UPDATE_USER',
+  REORDER_USERS: 'REORDER_USERS',
+  SET_LOADING: 'SET_LOADING',
+} as const;
+
 export interface UsersState {
   list: User[];
   loading: boolean;
 }
 
+type ActionType = typeof UsersActionType;
+
 export type UsersAction =
-  | { type: 'ADD_USER'; payload: User }
-  | { type: 'DELETE_USER'; payload: string }
-  | { type: 'UPDATE_USER'; payload: User }
-  | { type: 'SET_LOADING'; payload: boolean };
+  | { type: ActionType['ADD_USER']; payload: User }
+  | { type: ActionType['DELETE_USER']; payload: string }
+  | { type: ActionType['UPDATE_USER']; payload: User }
+  | { type: ActionType['REORDER_USERS']; payload: { from: number; to: number } }
+  | { type: ActionType['SET_LOADING']; payload: boolean };
 
 export const usersInitialState: UsersState = {
   list: [],
@@ -18,16 +29,23 @@ export const usersInitialState: UsersState = {
 
 export function usersReducer(state: UsersState, action: UsersAction): UsersState {
   switch (action.type) {
-    case 'ADD_USER':
+    case UsersActionType.ADD_USER:
       return { ...state, list: [...state.list, action.payload] };
-    case 'DELETE_USER':
+    case UsersActionType.DELETE_USER:
       return { ...state, list: state.list.filter((u) => u.id !== action.payload) };
-    case 'UPDATE_USER':
+    case UsersActionType.UPDATE_USER:
       return {
         ...state,
         list: state.list.map((u) => (u.id === action.payload.id ? action.payload : u)),
       };
-    case 'SET_LOADING':
+    case UsersActionType.REORDER_USERS: {
+      const { from, to } = action.payload;
+      const list = [...state.list];
+      const [moved] = list.splice(from, 1);
+      list.splice(to, 0, moved);
+      return { ...state, list };
+    }
+    case UsersActionType.SET_LOADING:
       return { ...state, loading: action.payload };
     default:
       return state;

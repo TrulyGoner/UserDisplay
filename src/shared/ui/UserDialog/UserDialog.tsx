@@ -72,6 +72,7 @@ export function UserDialog({ user, onSave, onClose }: Props) {
               value={address}
               onChange={handleAddressChange}
               rows={2}
+              autoFocus
             />
           </div>
         </div>

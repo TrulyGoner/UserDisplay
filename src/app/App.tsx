@@ -1,10 +1,11 @@
 import { UsersPage } from '../pages/users';
-import { Toast } from '../shared/ui';
+import { Toast, ApiStatus } from '../shared/ui';
 import './styles/index.css';
 
 function App() {
   return (
     <>
+      <ApiStatus />
       <UsersPage />
       <Toast />
     </>

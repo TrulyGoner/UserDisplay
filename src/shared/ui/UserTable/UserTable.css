@@ -5,6 +5,15 @@
   font-size: 1rem;
 }
 
+.ut-row--dragging {
+  opacity: 0.4;
+  cursor: grabbing;
+}
+
+.ut-row--drag-over {
+  box-shadow: inset 0 2px 0 var(--accent);
+}
+
 .ut-container {
   font-size: 0.9rem;
   width: 100%;
@@ -38,7 +47,7 @@
 }
 
 .ut-row:hover {
-  background: rgba(195, 7, 63, 0.08);
+  background: var(--accent-alpha-08);
 }
 
 .ut-cell {
@@ -70,7 +79,7 @@
 }
 
 .ut-details:hover {
-  background: rgba(195, 7, 63, 0.15);
+  background: var(--accent-alpha-15);
   color: var(--accent);
 }
 
@@ -86,7 +95,7 @@
 }
 
 .ut-delete:hover {
-  background: rgba(195, 7, 63, 0.15);
+  background: var(--accent-alpha-15);
   color: var(--accent);
 }
 

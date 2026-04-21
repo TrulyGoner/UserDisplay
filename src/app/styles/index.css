@@ -1,12 +1,4 @@
 :root {
-  --bg:        #1A1A1D;
-  --surface:   #252528;
-  --border:    #4E4E50;
-  --text:      #c9c9cc;
-  --text-h:    #f0f0f2;
-  --accent:    #C3073F;
-  --accent-hover: #950740;
-  --accent-dim:   #6F2232;
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
 

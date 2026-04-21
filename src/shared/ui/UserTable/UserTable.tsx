@@ -1,12 +1,14 @@
+import { memo, useState } from 'react';
 import { List, type RowComponentProps } from 'react-window';
 import { ICON_SIZE, MAX_HEIGHT, ROW_HEIGHT, SKELETON_COUNT, SKELETON_KEYS } from '../../constants';
 import type { UserTableProps, UserRowData } from '../../types';
 import { SkeletonRow } from '../Skeleton';
 import './UserTable.css';
 
-
-function Row({ index, style, users, onRowClick, onDelete }: RowComponentProps<UserRowData>) {
+function RowComponent({ index, style, users, onRowClick, onDelete, dragIndex, overIndex, onDragStart, onDragOver, onDrop, onDragEnd }: RowComponentProps<UserRowData>) {
   const user = users[index];
+  const isDragging = dragIndex === index;
+  const isOver = overIndex === index && dragIndex !== index;
 
   const handleDelete = () => {
     onDelete(user.id);
@@ -20,7 +22,12 @@ function Row({ index, style, users, onRowClick, onDelete }: RowComponentProps<Us
   return (
     <div
       style={style}
-      className="ut-row"
+      className={`ut-row${isDragging ? ' ut-row--dragging' : ''}${isOver ? ' ut-row--drag-over' : ''}`}
+      draggable
+      onDragStart={() => onDragStart(index)}
+      onDragOver={(e) => { e.preventDefault(); onDragOver(index); }}
+      onDrop={() => onDrop(index)}
+      onDragEnd={onDragEnd}
     >
       <div className="ut-cell">{user.username}</div>
       <div className="ut-cell">{user.name}</div>
@@ -48,7 +55,23 @@ function Row({ index, style, users, onRowClick, onDelete }: RowComponentProps<Us
   );
 }
 
-export function UserTable({ users, loading, onRowClick, onDelete }: UserTableProps) {
+const Row = memo(RowComponent) as typeof RowComponent;
+
+export function UserTable({ users, loading, onRowClick, onDelete, onReorder }: UserTableProps) {
+  const [dragIndex, setDragIndex] = useState<Nullable<number>>(null);
+  const [overIndex, setOverIndex] = useState<Nullable<number>>(null);
+
+  function handleDragStart(index: number) { setDragIndex(index); }
+  function handleDragOver(index: number) { setOverIndex(index); }
+  function handleDrop(index: number) {
+    if (dragIndex !== null && dragIndex !== index) {
+      onReorder(dragIndex, index);
+    }
+    setDragIndex(null);
+    setOverIndex(null);
+  }
+  function handleDragEnd() { setDragIndex(null); setOverIndex(null); }
+
   if (users.length === 0 && !loading) {
     return <p className="ut-empty">No users yet. Click «Add User» to add one.</p>;
   }
@@ -57,7 +80,7 @@ export function UserTable({ users, loading, onRowClick, onDelete }: UserTablePro
   const skeletonCount = users.length === 0 ? SKELETON_COUNT : 1;
   const listContainerStyle = { height: listHeight } as const;
   const listStyle = { overflow: listHeight < MAX_HEIGHT ? 'hidden' : 'auto' } as const;
-  const rowProps = { users, onRowClick, onDelete };
+  const rowProps = { users, onRowClick, onDelete, dragIndex, overIndex, onDragStart: handleDragStart, onDragOver: handleDragOver, onDrop: handleDrop, onDragEnd: handleDragEnd };
 
   return (
     <div className="ut-container">

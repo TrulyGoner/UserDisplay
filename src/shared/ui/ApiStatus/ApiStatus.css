@@ -1,0 +1,60 @@
+.api-status {
+  position: fixed;
+  top: 14px;
+  right: 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  backdrop-filter: blur(6px);
+  border: 1px solid transparent;
+  z-index: 1000;
+  user-select: none;
+}
+
+.api-status--checking {
+  background: var(--muted-bg);
+  border-color: var(--muted-border);
+  color: var(--muted);
+}
+
+.api-status--online {
+  background: var(--success-bg);
+  border-color: var(--success-border);
+  color: var(--success);
+}
+
+.api-status--offline {
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
+
+.api-status__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.api-status--checking .api-status__dot {
+  background: var(--muted);
+}
+
+.api-status--online .api-status__dot {
+  background: var(--success);
+  box-shadow: 0 0 6px var(--success);
+  animation: api-pulse 2s infinite;
+}
+
+.api-status--offline .api-status__dot {
+  background: var(--danger);
+}
+
+@keyframes api-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
